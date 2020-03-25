@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { Switch, Route, Redirect } from 'react-router'
 
 import Home from '@pages/Home'
+import Todos from '@pages/Todos'
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/todos" component={Todos} />
           <Redirect to="/" />
         </Switch>
       </BrowserRouter>
