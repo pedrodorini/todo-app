@@ -1,10 +1,14 @@
 import React from 'react'
 
+import './index.css'
+
 const Home = () => {
   return (
-    <div>
-      <h1>Bem-vindo</h1>
-      <p>To do app!</p>
+    <div className="home-container">
+      <h1 className="home-header">Bem-vindo ao To do App!</h1>
+      <a href="todos" className="home-button">
+        Começar
+      </a>
     </div>
   )
 }
