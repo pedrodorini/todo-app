@@ -1,11 +1,19 @@
 import React from 'react'
+import { BrowserRouter } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router'
+
+import Home from '@pages/Home'
 
 const App = () => {
   return (
-    <div>
-      <h1>Bem-vindo</h1>
-      <p>To do app!</p>
-    </div>
+    <main>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Redirect to="/" />
+        </Switch>
+      </BrowserRouter>
+    </main>
   )
 }
 
