@@ -17,7 +17,15 @@ const Todos = () => {
 
   return (
     <div>
-      <p>Os to do logo estarão aqui</p>
+      {todos?.length > 0 ? (
+        todos.map(({ _id, description }) => (
+          <div key={_id}>
+            <p>{description}</p>
+          </div>
+        ))
+      ) : (
+        <p>Parece que você ainda não tem nada para fazer</p>
+      )}
     </div>
   )
 }
