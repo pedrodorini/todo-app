@@ -1,0 +1,26 @@
+{
+  "plugins": ["prettier"],
+  "extends": ["react-app", "eslint:recommended", "prettier"],
+  "rules": {
+    "prettier/prettier": "warn",
+    "comma-dangle": ["warn", "always-multiline"],
+    "max-len": ["off"],
+    "semi": ["warn", "never"],
+    "padded-blocks": ["warn", "never"],
+    "no-var": "error",
+    "template-curly-spacing": "warn",
+    "no-duplicate-imports": ["warn", { "includeExports": true }],
+    "no-dupe-class-members": "warn",
+    "no-useless-constructor": "warn",
+    "space-infix-ops": "warn",
+    "space-before-blocks": "warn",
+    "no-trailing-spaces": "warn",
+    "no-multiple-empty-lines": ["warn", { "max": 1 }],
+    "no-multi-assign": "error",
+    "radix": ["warn", "as-needed"],
+    "no-debugger": "off",
+    "no-unused-vars": "warn",
+    "no-use-before-define": "off",
+    "react-hooks/exhaustive-deps": "off"
+  }
+}
