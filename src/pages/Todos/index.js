@@ -2,6 +2,7 @@ import React, { useEffect, useState, Fragment } from 'react'
 import { Formik, Form, Field } from 'formik'
 
 import Loading from '@components/Loading'
+import Todo from '@components/Todo'
 
 import { getTodos, addTodo } from '@services/todos'
 
@@ -10,7 +11,6 @@ import './index.css'
 const Todos = () => {
   const [todos, setTodos] = useState([])
   const [loading, setLoading] = useState(false)
-  const mobile = window.innerWidth < 800
 
   useEffect(() => {
     getAllTodos()
@@ -52,7 +52,7 @@ const Todos = () => {
           </Form>
         )}
       </Formik>
-      {todos?.length > 0 ? (
+      {todos?.length > 0 && !loading ? (
         <Fragment>
           <div className="todos-table">
             <div className="todos-table-row todos-table-row-header">
@@ -69,30 +69,8 @@ const Todos = () => {
                 <p>Ações</p>
               </div>
             </div>
-            {todos.map(({ _id, description, createdAt, done }) => (
-              <div className="todos-table-row" key={_id}>
-                <div className="todos-column">
-                  {mobile && (
-                    <p className="todos-column-description">Tarefa:</p>
-                  )}
-                  <p>{description}</p>
-                </div>
-                <div className="todos-column">
-                  {mobile && (
-                    <p className="todos-column-description">Data de criação:</p>
-                  )}
-                  <p>{new Date(createdAt)?.toLocaleDateString()}</p>
-                </div>
-                <div className="todos-column">
-                  {mobile && (
-                    <p className="todos-column-description">Situação:</p>
-                  )}
-                  <p>{done ? 'Feito' : 'A fazer'}</p>
-                </div>
-                <div className="todos-column">
-                  <p>Ações</p>
-                </div>
-              </div>
+            {todos.map((todo) => (
+              <Todo key={todo._id} todo={todo} />
             ))}
           </div>
         </Fragment>
