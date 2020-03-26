@@ -16,8 +16,12 @@
   margin: 16px 0;
 }
 
+.todos-input-wrapper {
+  flex: 1
+}
+
 .todos-input {
-  flex: 1;
+  width: 100%;
   border: 0;
   border-bottom: 1px solid #D0D1DC;
   color: #A1A9B4;
@@ -26,12 +30,19 @@
   outline: none;
 }
 
+.todos-input-error {
+  margin-top: 5px;
+  color: #FE5054;
+  font-size: 14 px;
+}
+
 .todos-button {
   border: 0;
   border-radius: 0 4px 4px 0;
   padding: 16px 10px;
   color: #ffffff;
   background-color: #20b461;
+  height: 46px;
 }
 
 .todos-table {

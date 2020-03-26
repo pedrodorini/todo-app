@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import { Formik, Form, Field } from 'formik'
+import * as Yup from 'yup'
 
 import Loading from '@components/Loading'
 import Todo from '@components/Todo'
@@ -7,6 +8,10 @@ import Todo from '@components/Todo'
 import { getTodos, addTodo } from '@services/todos'
 
 import './index.css'
+
+const AddSchema = Yup.object().shape({
+  description: Yup.string().required('É preciso descrever a tarefa'),
+})
 
 const Todos = () => {
   const [todos, setTodos] = useState([])
@@ -36,20 +41,31 @@ const Todos = () => {
   return (
     <div className="todos-container">
       <h2 className="todos-header">Afazeres</h2>
-      <Formik initialValues={{ description: '' }} onSubmit={handleSubmitTodo}>
-        {({ handleSubmit, handleChange, values }) => (
-          <Form onSubmit={handleSubmit} className="todos-input-container">
-            <Field
-              name="description"
-              placeholder="Digite aqui sua tarefa"
-              className="todos-input"
-              value={values.description}
-              onChange={handleChange}
-            />
-            <button type="submit" className="todos-button">
-              Adicionar
-            </button>
-          </Form>
+      <Formik
+        initialValues={{ description: '' }}
+        validationSchema={AddSchema}
+        onSubmit={handleSubmitTodo}
+      >
+        {({ handleSubmit, handleChange, values, errors }) => (
+          <Fragment>
+            <Form onSubmit={handleSubmit} className="todos-input-container">
+              <div className="todos-input-wrapper">
+                <Field
+                  name="description"
+                  placeholder="Digite aqui sua tarefa"
+                  className="todos-input"
+                  value={values.description}
+                  onChange={handleChange}
+                />
+                {errors.description && (
+                  <p className="todos-input-error">{errors.description}</p>
+                )}
+              </div>
+              <button type="submit" className="todos-button">
+                Adicionar
+              </button>
+            </Form>
+          </Fragment>
         )}
       </Formik>
       {todos?.length > 0 && !loading ? (
