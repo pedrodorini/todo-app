@@ -10,6 +10,30 @@
   margin: 32px 0;
 }
 
+.todos-input-container {
+  display: flex;
+  width: 100%;
+  margin: 16px 0;
+}
+
+.todos-input {
+  flex: 1;
+  border: 0;
+  border-bottom: 1px solid #D0D1DC;
+  color: #A1A9B4;
+  background-color: transparent;
+  padding: 16px 10px;
+  outline: none;
+}
+
+.todos-button {
+  border: 0;
+  border-radius: 0 4px 4px 0;
+  padding: 16px 10px;
+  color: #ffffff;
+  background-color: #20b461;
+}
+
 .todos-table {
   width: 100%;
   overflow-x: auto;

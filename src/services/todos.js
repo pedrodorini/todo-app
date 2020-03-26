@@ -13,3 +13,17 @@ export const getTodos = async () => {
 
   return results
 }
+
+export const addTodo = async (description) => {
+  let success = false
+
+  try {
+    const response = await Http.post('todos', { description, done: false })
+
+    if (response?.status === 201) success = true
+  } catch (err) {
+    console.error(err)
+  }
+
+  return success
+}

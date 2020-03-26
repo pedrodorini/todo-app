@@ -1,8 +1,9 @@
 import React, { useEffect, useState, Fragment } from 'react'
+import { Formik, Form, Field } from 'formik'
 
 import Loading from '@components/Loading'
 
-import { getTodos } from '@services/todos'
+import { getTodos, addTodo } from '@services/todos'
 
 import './index.css'
 
@@ -24,9 +25,33 @@ const Todos = () => {
     setLoading(false)
   }
 
+  const handleSubmitTodo = async ({ description }) => {
+    setLoading(true)
+
+    const success = await addTodo(description)
+
+    if (success) getAllTodos()
+  }
+
   return (
     <div className="todos-container">
       <h2 className="todos-header">Afazeres</h2>
+      <Formik initialValues={{ description: '' }} onSubmit={handleSubmitTodo}>
+        {({ handleSubmit, handleChange, values }) => (
+          <Form onSubmit={handleSubmit} className="todos-input-container">
+            <Field
+              name="description"
+              placeholder="Digite aqui sua tarefa"
+              className="todos-input"
+              value={values.description}
+              onChange={handleChange}
+            />
+            <button type="submit" className="todos-button">
+              Adicionar
+            </button>
+          </Form>
+        )}
+      </Formik>
       {todos?.length > 0 ? (
         <Fragment>
           <div className="todos-table">
