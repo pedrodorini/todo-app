@@ -1,5 +1,7 @@
 import React from 'react'
 
+import DropdownButton from '@components/DropdownButton'
+
 const Todo = ({ todo }) => {
   const { description, createdAt, done } = todo
   const mobile = window.innerWidth < 800
@@ -19,7 +21,7 @@ const Todo = ({ todo }) => {
         <p>{done ? 'Feito' : 'A fazer'}</p>
       </div>
       <div className="todos-column">
-        <p>Ações</p>
+        <DropdownButton />
       </div>
     </div>
   )

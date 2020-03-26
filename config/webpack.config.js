@@ -296,6 +296,7 @@ module.exports = function(webpackEnv) {
         '@components': path.resolve(__dirname, '../src/components'),
         '@pages': path.resolve(__dirname, '../src/pages'),
         '@services': path.resolve(__dirname, '../src/services'),
+        '@icons': path.resolve(__dirname, '../src/components/Icons'),
         // Allows for better profiling with ReactDevTools
         ...(isEnvProductionProfile && {
           'react-dom$': 'react-dom/profiling',
