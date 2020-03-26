@@ -13,7 +13,7 @@ import TodosContext from '@context/Todos'
 
 import './index.css'
 
-const AddSchema = Yup.object().shape({
+const ValidationSchema = Yup.object().shape({
   description: Yup.string().required('É preciso descrever a tarefa'),
 })
 
@@ -43,13 +43,17 @@ const Todos = () => {
     setLoading(false)
   }
 
-  const handleSubmitTodo = async ({ description }) => {
+  const handleSubmitTodo = async (values, { resetForm }) => {
     setLoading(true)
 
-    const success = await addTodo(description)
+    const success = await addTodo(values)
 
-    if (success) getAllTodos()
-    else setLoading(false)
+    if (success) {
+      getAllTodos()
+      resetForm()
+    } else {
+      setLoading(false)
+    }
   }
 
   const handleSubmitEditTodo = async values => {
@@ -72,7 +76,7 @@ const Todos = () => {
   const handleRemoveTodo = async () => {
     setLoading(true)
 
-    const success = await removeTodo(toBeChanged?._id)
+    const success = await removeTodo(toBeChanged)
 
     if (success) {
       getAllTodos()
@@ -93,7 +97,7 @@ const Todos = () => {
               done: toBeChanged.done,
             }}
             onSubmit={handleSubmitEditTodo}
-            validationSchema={AddSchema}
+            validationSchema={ValidationSchema}
           >
             {({
               handleChange,
@@ -118,7 +122,7 @@ const Todos = () => {
                 <div className="todos-field-wrapper">
                   <Checkbox
                     name="done"
-                    label="Feito"
+                    label="Concluído"
                     checked={values.done}
                     onChange={() => setFieldValue('done', !values.done)}
                   />
@@ -172,13 +176,13 @@ const Todos = () => {
     <div className="todos-container">
       <h2 className="todos-header">Nova tarefa</h2>
       <Formik
-        initialValues={{ description: '' }}
-        validationSchema={AddSchema}
+        initialValues={{ description: '', done: false }}
+        validationSchema={ValidationSchema}
         onSubmit={handleSubmitTodo}
       >
-        {({ handleSubmit, handleChange, values, errors }) => (
-          <Fragment>
-            <Form onSubmit={handleSubmit} className="todos-input-container">
+        {({ handleSubmit, handleChange, values, errors, setFieldValue }) => (
+          <Form onSubmit={handleSubmit}>
+            <div className="todos-input-container">
               <div className="todos-input-wrapper">
                 <Field
                   name="description"
@@ -191,11 +195,22 @@ const Todos = () => {
                   <p className="todos-input-error">{errors.description}</p>
                 )}
               </div>
-              <button type="submit" className="todos-button todos-button-add">
-                Adicionar
-              </button>
-            </Form>
-          </Fragment>
+            </div>
+            <div className="todos-field-wrapper">
+              <Checkbox
+                name="done"
+                label="Concluído"
+                checked={values.done}
+                onChange={() => setFieldValue('done', !values.done)}
+              />
+            </div>
+            <button
+              type="submit"
+              className="todos-button todos-button-positive todos-button-add"
+            >
+              Adicionar
+            </button>
+          </Form>
         )}
       </Formik>
       <h2 className="todos-header">Tarefas</h2>

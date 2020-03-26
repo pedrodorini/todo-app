@@ -16,11 +16,11 @@ export const getTodos = async () => {
   return results
 }
 
-export const addTodo = async description => {
+export const addTodo = async payload => {
   let success = false
 
   try {
-    const response = await Http.post('todos', { description, done: false })
+    const response = await Http.post('todos', payload)
 
     if (response?.status === 201) {
       success = true
@@ -52,15 +52,15 @@ export const editTodo = async ({ id, description, done }) => {
   return success
 }
 
-export const removeTodo = async id => {
+export const removeTodo = async ({ _id, description }) => {
   let success = false
 
   try {
-    const response = await Http.delete(`todos/${id}`)
+    const response = await Http.delete(`todos/${_id}`)
 
     if (response?.status === 204) {
       success = true
-      showToast('Tarefa removida com sucesso')
+      showToast(`Registro ${description} removido com sucesso`)
     }
   } catch (err) {
     console.error(err)

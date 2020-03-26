@@ -41,6 +41,7 @@
   padding: 10px;
   animation: fadeIn .2s ease .2s;
   animation-fill-mode: backwards;
+  align-items: center;
 }
 
 .dropdown-container-option svg {
