@@ -1,14 +1,17 @@
-import React, { useState, useEffect, useRef, Fragment } from 'react'
+import React, { useState, useEffect, useRef, useContext, Fragment } from 'react'
 import classNames from 'classnames'
 
 import MenuDot from '@icons/MenuDotVertical'
 import Pencil from '@icons/Pencil'
 import RecicleBin from '@icons/RecicleBin'
 
+import TodosContext from '@context/Todos'
+
 import './index.css'
 
-const DropdownButton = () => {
+const DropdownButton = ({ todo }) => {
   const [visible, setVisible] = useState(false)
+  const { modalActions, setModal, setToBeChanged } = useContext(TodosContext)
   const button = useRef(null)
   const container = useRef(null)
   const mobile = window.innerWidth < 800
@@ -36,6 +39,11 @@ const DropdownButton = () => {
     visible && setVisible(false)
   }
 
+  const handleActionClicked = (action) => {
+    setModal(modalActions[action])
+    setToBeChanged(todo)
+  }
+
   return (
     <div className="dropdown-container">
       <button
@@ -49,11 +57,17 @@ const DropdownButton = () => {
       <div className={containerClasses} ref={container}>
         {visible && (
           <Fragment>
-            <div className="dropdown-container-option">
+            <div
+              onClick={() => handleActionClicked(modalActions.edit)}
+              className="dropdown-container-option"
+            >
               <Pencil />
               <p>Editar</p>
             </div>
-            <div className="dropdown-container-option">
+            <div
+              onClick={() => handleActionClicked(modalActions.remove)}
+              className="dropdown-container-option"
+            >
               <RecicleBin />
               <p>Excluir</p>
             </div>

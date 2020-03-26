@@ -37,19 +37,48 @@
   font-size: 14 px;
 }
 
+.todos-button-container {
+  display: flex;
+  margin-top: 8px;
+}
+
 .todos-button {
   border: 0;
-  border-radius: 0 4px 4px 0;
+  border-radius: 4px;
   padding: 16px 10px;
-  color: #ffffff;
-  background-color: #20b461;
   height: 46px;
   cursor: pointer;
   outline: none;
+  transition: .3s ease;
 }
 
-.todos-button:hover {
+.todos-button-add {
+  border-radius: 0 4px 4px 0;
+  color: #ffffff;
+  background-color: #20b461;
+}
+
+.todos-button-positive {
+  flex: 1;
+  margin-right: 16px;
+  background-color: #20b461;
+  color: #ffffff;
+}
+
+.todos-button-negative {
+  flex: 1;
+  border: 1px solid #FE5054;
+  background-color: transparent;
+  color: #FE5054;
+}
+
+.todos-button-add:hover, .todos-button-positive:hover {
   background-color: #0f552e;
+}
+
+.todos-button-negative:hover {
+  background-color: #FE5054;
+  color: #ffffff;
 }
 
 .todos-table {

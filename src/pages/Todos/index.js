@@ -4,8 +4,11 @@ import * as Yup from 'yup'
 
 import Loading from '@components/Loading'
 import Todo from '@components/Todo'
+import Modal from '@components/Modal'
 
 import { getTodos, addTodo } from '@services/todos'
+
+import TodosContext from '@context/Todos'
 
 import './index.css'
 
@@ -13,9 +16,18 @@ const AddSchema = Yup.object().shape({
   description: Yup.string().required('É preciso descrever a tarefa'),
 })
 
+const ModalTitles = {
+  edit: 'Editar tarefa',
+  remove: 'Excluir tarefa',
+}
+
+const ModalActions = { edit: 'edit', remove: 'remove' }
+
 const Todos = () => {
   const [todos, setTodos] = useState([])
   const [loading, setLoading] = useState(false)
+  const [modal, setModal] = useState('')
+  const [toBeChanged, setToBeChanged] = useState(null)
 
   useEffect(() => {
     getAllTodos()
@@ -36,6 +48,59 @@ const Todos = () => {
     const success = await addTodo(description)
 
     if (success) getAllTodos()
+  }
+
+  const renderModalContent = () => {
+    if (modal === ModalActions.edit) {
+      return (
+        <Fragment>
+          <Formik
+            initialValues={{ description: toBeChanged.description }}
+            validationSchema={AddSchema}
+          >
+            {({ handleChange, handleSubmit, values, errors }) => (
+              <Form onSubmit={handleSubmit}>
+                <div className="todos-input-wrapper">
+                  <Field
+                    name="description"
+                    placeholder="Digite aqui sua tarefa"
+                    className="todos-input"
+                    value={values.description}
+                    onChange={handleChange}
+                  />
+                  {errors.description && (
+                    <p className="todos-input-error">{errors.description}</p>
+                  )}
+                </div>
+                <div className="todos-button-container">
+                  <button
+                    type="submit"
+                    className="todos-button todos-button-positive"
+                  >
+                    Salvar
+                  </button>
+                  <button
+                    type="button"
+                    className="todos-button todos-button-negative"
+                    onClick={() => setModal('')}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </Fragment>
+      )
+    } else {
+      return (
+        <Fragment>
+          <p>Deseja realmente excluir essa tarefa?</p>
+          <button>Sim, tenho certeza</button>
+          <button>Cancelar</button>
+        </Fragment>
+      )
+    }
   }
 
   return (
@@ -61,7 +126,7 @@ const Todos = () => {
                   <p className="todos-input-error">{errors.description}</p>
                 )}
               </div>
-              <button type="submit" className="todos-button">
+              <button type="submit" className="todos-button todos-button-add">
                 Adicionar
               </button>
             </Form>
@@ -69,8 +134,14 @@ const Todos = () => {
         )}
       </Formik>
       <h2 className="todos-header">Tarefas</h2>
-      {todos?.length > 0 && !loading ? (
-        <Fragment>
+      <TodosContext.Provider
+        value={{
+          modalActions: ModalActions,
+          setModal,
+          setToBeChanged,
+        }}
+      >
+        {todos?.length > 0 && !loading ? (
           <div className="todos-table">
             <div className="todos-table-row todos-table-row-header">
               <div className="todos-column todos-column-header">
@@ -90,16 +161,20 @@ const Todos = () => {
               <Todo key={todo._id} todo={todo} />
             ))}
           </div>
-        </Fragment>
-      ) : (
-        <p>
-          {loading
-            ? 'Carregando...'
-            : 'Parece que você ainda não tem nada para fazer'}
-        </p>
-      )}
-
+        ) : (
+          <p>
+            {loading
+              ? 'Carregando...'
+              : 'Parece que você ainda não tem nada para fazer'}
+          </p>
+        )}
+      </TodosContext.Provider>
       {loading && <Loading />}
+      {modal && (
+        <Modal title={ModalTitles[modal]} onClose={() => setModal('')}>
+          {renderModalContent()}
+        </Modal>
+      )}
     </div>
   )
 }

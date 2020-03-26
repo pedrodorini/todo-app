@@ -21,7 +21,7 @@ const Todo = ({ todo }) => {
         <p>{done ? 'Feito' : 'A fazer'}</p>
       </div>
       <div className="todos-column">
-        <DropdownButton />
+        <DropdownButton todo={todo} />
       </div>
     </div>
   )
