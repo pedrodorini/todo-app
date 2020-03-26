@@ -40,7 +40,7 @@ const Todos = () => {
 
   return (
     <div className="todos-container">
-      <h2 className="todos-header">Afazeres</h2>
+      <h2 className="todos-header">Nova tarefa</h2>
       <Formik
         initialValues={{ description: '' }}
         validationSchema={AddSchema}
@@ -68,6 +68,7 @@ const Todos = () => {
           </Fragment>
         )}
       </Formik>
+      <h2 className="todos-header">Tarefas</h2>
       {todos?.length > 0 && !loading ? (
         <Fragment>
           <div className="todos-table">
