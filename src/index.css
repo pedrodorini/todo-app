@@ -19,3 +19,55 @@ body {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
+.toast {
+  position: fixed;
+  display: flex;
+  bottom: 0;
+  width: 300px;
+  left: calc(50% - 150px);
+  z-index: 1000;
+  text-align: left;
+  padding: 10px 15px;
+}
+
+.toast-success {
+  background-color: #00e676;
+  color: #ffffff;
+}
+
+.toast-failure {
+  background-color: #dd2c00;
+  color: #ffffff;
+}
+
+.toast-warning {
+  background-color: #ffb300;
+  color: #ffffff;
+}
+
+.toast-dismiss {
+  color: #ffffff;
+  border: 0;
+  border-radius: 50px;
+  align-self: flex-end;
+  background-color: transparent;
+  cursor: pointer;
+  outline: 0;
+}
+
+.toast-text {
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+@keyframes toastIn {
+  0% { transform: translate(0, 49px) }
+  100% {transform: translate(0, 0px)}
+}
+
+@keyframes toastOut {
+  0% { transform: translate(0, 0px) }
+  100% {transform: translate(0, 49px)}
+}

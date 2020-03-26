@@ -126,6 +126,11 @@
   margin: 16px 0;
 }
 
+.todos-text {
+  color: #777777;
+  margin-bottom: 16px;
+}
+
 @media(min-width: 800px) {
   .todos-table-row {
     flex-direction: row;

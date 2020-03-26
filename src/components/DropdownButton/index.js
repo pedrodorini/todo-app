@@ -32,7 +32,7 @@ const DropdownButton = ({ todo }) => {
     }
   })
 
-  const handleClick = (e) => {
+  const handleClick = e => {
     if (
       container?.current?.contains(e.target) ||
       button?.current?.contains(e.target)
@@ -43,7 +43,7 @@ const DropdownButton = ({ todo }) => {
     visible && setVisible(false)
   }
 
-  const handleActionClicked = (action) => {
+  const handleActionClicked = action => {
     setModal(modalActions[action])
     setToBeChanged(todo)
   }

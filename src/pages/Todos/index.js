@@ -7,7 +7,7 @@ import Todo from '@components/Todo'
 import Modal from '@components/Modal'
 import Checkbox from '@components/Form/Checkbox'
 
-import { getTodos, addTodo, editTodo } from '@services/todos'
+import { getTodos, addTodo, editTodo, removeTodo } from '@services/todos'
 
 import TodosContext from '@context/Todos'
 
@@ -49,9 +49,10 @@ const Todos = () => {
     const success = await addTodo(description)
 
     if (success) getAllTodos()
+    else setLoading(false)
   }
 
-  const handleSubmitEditTodo = async (values) => {
+  const handleSubmitEditTodo = async values => {
     setLoading(true)
 
     const success = await editTodo({
@@ -63,6 +64,22 @@ const Todos = () => {
       getAllTodos()
       setModal('')
       setToBeChanged(null)
+    } else {
+      setLoading(false)
+    }
+  }
+
+  const handleRemoveTodo = async () => {
+    setLoading(true)
+
+    const success = await removeTodo(toBeChanged?._id)
+
+    if (success) {
+      getAllTodos()
+      setModal('')
+      setToBeChanged(null)
+    } else {
+      setLoading(false)
     }
   }
 
@@ -129,9 +146,23 @@ const Todos = () => {
     } else {
       return (
         <Fragment>
-          <p>Deseja realmente excluir essa tarefa?</p>
-          <button>Sim, tenho certeza</button>
-          <button>Cancelar</button>
+          <p className="todos-text">Deseja realmente excluir essa tarefa?</p>
+          <div className="todos-button-container">
+            <button
+              type="button"
+              onClick={handleRemoveTodo}
+              className="todos-button todos-button-positive"
+            >
+              Sim, tenho certeza
+            </button>
+            <button
+              type="button"
+              className="todos-button todos-button-negative"
+              onClick={() => setModal('')}
+            >
+              Cancelar
+            </button>
+          </div>
         </Fragment>
       )
     }
@@ -192,7 +223,7 @@ const Todos = () => {
                 <p>Ações</p>
               </div>
             </div>
-            {todos.map((todo) => (
+            {todos.map(todo => (
               <Todo key={todo._id} todo={todo} />
             ))}
           </div>
