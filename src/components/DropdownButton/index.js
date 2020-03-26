@@ -5,6 +5,7 @@ import MenuDot from '@icons/MenuDotVertical'
 import Pencil from '@icons/Pencil'
 import RecicleBin from '@icons/RecicleBin'
 import Check from '@icons/Check'
+import Close from '@icons/Close'
 
 import TodosContext from '@context/Todos'
 
@@ -12,7 +13,9 @@ import './index.css'
 
 const DropdownButton = ({ todo }) => {
   const [visible, setVisible] = useState(false)
-  const { modalActions, setModal, setToBeChanged } = useContext(TodosContext)
+  const { modalActions, setModal, setToBeChanged, editTodo } = useContext(
+    TodosContext,
+  )
   const button = useRef(null)
   const container = useRef(null)
   const mobile = window.innerWidth < 800
@@ -59,11 +62,11 @@ const DropdownButton = ({ todo }) => {
         {visible && (
           <Fragment>
             <div
-              onClick={() => handleActionClicked(modalActions.edit)}
+              onClick={() => editTodo({ ...todo, done: !todo.done })}
               className="dropdown-container-option"
             >
-              <Check />
-              <p>Completar</p>
+              {todo.done ? <Close width={15} height={15} /> : <Check />}
+              <p>{todo.done ? 'Desfazer' : 'Completar'}</p>
             </div>
             <div
               onClick={() => handleActionClicked(modalActions.edit)}

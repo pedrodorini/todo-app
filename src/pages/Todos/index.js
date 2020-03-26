@@ -5,8 +5,9 @@ import * as Yup from 'yup'
 import Loading from '@components/Loading'
 import Todo from '@components/Todo'
 import Modal from '@components/Modal'
+import Checkbox from '@components/Form/Checkbox'
 
-import { getTodos, addTodo } from '@services/todos'
+import { getTodos, addTodo, editTodo } from '@services/todos'
 
 import TodosContext from '@context/Todos'
 
@@ -50,15 +51,40 @@ const Todos = () => {
     if (success) getAllTodos()
   }
 
+  const handleSubmitEditTodo = async (values) => {
+    setLoading(true)
+
+    const success = await editTodo({
+      id: values._id || toBeChanged._id,
+      ...values,
+    })
+
+    if (success) {
+      getAllTodos()
+      setModal('')
+      setToBeChanged(null)
+    }
+  }
+
   const renderModalContent = () => {
     if (modal === ModalActions.edit) {
       return (
         <Fragment>
           <Formik
-            initialValues={{ description: toBeChanged.description }}
+            initialValues={{
+              description: toBeChanged.description,
+              done: toBeChanged.done,
+            }}
+            onSubmit={handleSubmitEditTodo}
             validationSchema={AddSchema}
           >
-            {({ handleChange, handleSubmit, values, errors }) => (
+            {({
+              handleChange,
+              handleSubmit,
+              values,
+              errors,
+              setFieldValue,
+            }) => (
               <Form onSubmit={handleSubmit}>
                 <div className="todos-input-wrapper">
                   <Field
@@ -71,6 +97,14 @@ const Todos = () => {
                   {errors.description && (
                     <p className="todos-input-error">{errors.description}</p>
                   )}
+                </div>
+                <div className="todos-field-wrapper">
+                  <Checkbox
+                    name="done"
+                    label="Feito"
+                    checked={values.done}
+                    onChange={() => setFieldValue('done', !values.done)}
+                  />
                 </div>
                 <div className="todos-button-container">
                   <button
@@ -137,6 +171,7 @@ const Todos = () => {
       <TodosContext.Provider
         value={{
           modalActions: ModalActions,
+          editTodo: handleSubmitEditTodo,
           setModal,
           setToBeChanged,
         }}

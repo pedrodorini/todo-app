@@ -27,3 +27,17 @@ export const addTodo = async (description) => {
 
   return success
 }
+
+export const editTodo = async ({ id, description, done }) => {
+  let success = false
+
+  try {
+    const response = await Http.put(`todos/${id}`, { description, done })
+
+    if (response?.status === 200) success = true
+  } catch (err) {
+    console.error(err)
+  }
+
+  return success
+}

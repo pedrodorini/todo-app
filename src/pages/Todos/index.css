@@ -122,6 +122,10 @@
   color: #777777;
 }
 
+.todos-field-wrapper {
+  margin: 16px 0;
+}
+
 @media(min-width: 800px) {
   .todos-table-row {
     flex-direction: row;

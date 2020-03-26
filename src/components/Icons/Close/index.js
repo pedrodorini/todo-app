@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Close = () => (
+const Close = ({ width = 10.447, height = 10.447 }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="10.447"
-    height="10.447"
+    width={width}
+    height={height}
     viewBox="0 0 10.447 10.447"
   >
     <path
