@@ -9,8 +9,8 @@ Pré requisitos:
 Execução
 
 * Clone esse respositório
-* No terminal digite __yarn install__
-* Após o termino digite __yarn start__
+* No terminal execute __yarn install__
+* Após o termino execute __yarn start__ no terminal
 
 Pronto, agora é só utilizar : )
 
