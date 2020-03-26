@@ -47,15 +47,21 @@ const Todos = () => {
             {todos.map(({ _id, description, createdAt, done }) => (
               <div className="todos-table-row" key={_id}>
                 <div className="todos-column">
-                  {mobile && <p>Tarefa</p>}
+                  {mobile && (
+                    <p className="todos-column-description">Tarefa:</p>
+                  )}
                   <p>{description}</p>
                 </div>
                 <div className="todos-column">
-                  {mobile && <p>Data de criação</p>}
+                  {mobile && (
+                    <p className="todos-column-description">Data de criação:</p>
+                  )}
                   <p>{new Date(createdAt)?.toLocaleDateString()}</p>
                 </div>
                 <div className="todos-column">
-                  {mobile && <p>Situação</p>}
+                  {mobile && (
+                    <p className="todos-column-description">Situação:</p>
+                  )}
                   <p>{done ? 'Feito' : 'A fazer'}</p>
                 </div>
                 <div className="todos-column">

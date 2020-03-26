@@ -30,7 +30,18 @@
 
 .todos-column {
   flex: 1px;
+  display: flex;
   color: #A1A9B4;
+  margin-bottom: 8px;
+}
+
+.todos.column:not(:last-child) {
+  margin-bottom: 0;
+}
+
+.todos-column-description {
+  font-weight: bold;
+  margin-right: 3px;
 }
 
 .todos-column-header {
@@ -48,5 +59,9 @@
   .todos-table-row-header {
     border-top: 1px solid #D0D1DC;
     display: flex;
+  }
+
+  .todos-column {
+    margin: 0;
   }
 }
