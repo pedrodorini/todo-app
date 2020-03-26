@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import MenuDot from '@icons/MenuDotVertical'
 import Pencil from '@icons/Pencil'
 import RecicleBin from '@icons/RecicleBin'
+import Check from '@icons/Check'
 
 import TodosContext from '@context/Todos'
 
@@ -57,6 +58,13 @@ const DropdownButton = ({ todo }) => {
       <div className={containerClasses} ref={container}>
         {visible && (
           <Fragment>
+            <div
+              onClick={() => handleActionClicked(modalActions.edit)}
+              className="dropdown-container-option"
+            >
+              <Check />
+              <p>Completar</p>
+            </div>
             <div
               onClick={() => handleActionClicked(modalActions.edit)}
               className="dropdown-container-option"
