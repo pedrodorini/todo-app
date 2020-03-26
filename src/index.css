@@ -6,6 +6,10 @@ html {
   line-height: 1;
 }
 
+body {
+  background-color: #F3F5F9;
+}
+
 * {
   border-collapse: inherit;
   margin: 0;
